@@ -1,0 +1,82 @@
+<div class="w-full h-full flex justify-center">
+  <div class="w-96 h-[40rem] justify-center items-center bg-neutral-50 p-4">
+    <form
+      [formGroup]="formPet"
+      (ngSubmit)="submit()"
+      class="flex flex-col w-full gap-2"
+    >
+      <label for="name">Nombre: </label>
+      <input
+        [class.invalid]="formPet.get('name')?.invalid && formPet.get('name')?.touched"
+        [class.valid]="formPet.get('name')?.valid && formPet.get('name')?.touched"
+        id="name"
+        type="text"
+        formControlName="name"
+      />
+
+      <label for="breed">Raza: </label>
+      <input
+        id="breed"
+        type="text"
+        formControlName="breed"
+        [class.invalid]="formPet.get('breed')?.invalid && formPet.get('breed')?.touched"
+        [class.valid]="formPet.get('breed')?.valid && formPet.get('breed')?.touched"
+      />
+
+      <label for="age">Edad (años): </label>
+      <input
+        [class.invalid]="formPet.get('age')?.invalid && formPet.get('age')?.touched"
+        [class.valid]="formPet.get('age')?.valid && formPet.get('age')?.touched"
+        id="age"
+        type="number"
+        min="0"
+        formControlName="age"
+      />
+
+      <label for="weight">Peso (kg): </label>
+      <input
+        [class.invalid]="formPet.get('weight')?.invalid && formPet.get('weight')?.touched"
+        [class.valid]="formPet.get('weight')?.valid && formPet.get('weight')?.touched"
+        id="weight"
+        type="number"
+        min="0"
+        formControlName="weight"
+      />
+
+      <label for="height">Altura (cm): </label>
+      <input
+        [class.invalid]="formPet.get('height')?.invalid && formPet.get('height')?.touched"
+        [class.valid]="formPet.get('height')?.valid && formPet.get('height')?.touched"
+        id="height"
+        type="number"
+        min="0"
+        formControlName="height"
+      />
+
+      <label for="location">Ciudad: </label>
+      <input
+        [class.invalid]="formPet.get('location')?.invalid && formPet.get('location')?.touched"
+        [class.valid]="formPet.get('location')?.valid && formPet.get('location')?.touched"
+        id="location"
+        type="text"
+        formControlName="location"
+      />
+
+      <label for="description">Descripción mascota: </label>
+      <input
+        [class.invalid]="formPet.get('description')?.invalid && formPet.get('description')?.touched"
+        [class.valid]="formPet.get('description')?.valid && formPet.get('description')?.touched"
+        id="description"
+        type="text"
+        formControlName="description"
+      />
+
+      <button
+        class="self-center rounded-md p-4 m-4 w-48 h-16 bg-cyan-400 text-neutral-50 text-2xl font-semibold text-center hover:bg-cyan-500"
+        type="submit"
+      >
+        Continuar
+      </button>
+    </form>
+  </div>
+</div>
