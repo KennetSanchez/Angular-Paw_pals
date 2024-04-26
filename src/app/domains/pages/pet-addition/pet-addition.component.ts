@@ -1,18 +1,21 @@
-import { Component } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Component, EventEmitter, Output } from '@angular/core';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Pet } from '../../const/Pet';
+import { PetCardComponent } from "../pet-card/pet-card.component";
 @Component({
-  selector: 'app-pet-addition',
-  standalone: true,
-  imports: [ReactiveFormsModule],
-  templateUrl: './pet-addition.component.html',
-  styleUrl: './pet-addition.component.css',
+    selector: 'app-pet-addition',
+    standalone: true,
+    templateUrl: './pet-addition.component.html',
+    styleUrl: './pet-addition.component.css',
+    imports: [ReactiveFormsModule, PetCardComponent]
 })
 export class PetAdditionComponent {
 
   userId = '';
   petId = '';
   
+  @Output() formEmitter = new EventEmitter();
+
   formPet: FormGroup;
   constructor(private fb:FormBuilder){
     this.formPet = this.fb.group({
@@ -44,6 +47,10 @@ export class PetAdditionComponent {
     };
   }
 
+  cancel(){
+
+  }
+
   submit() {
     console.log("Submit");
 
@@ -52,6 +59,9 @@ export class PetAdditionComponent {
       Object.values(this.formPet.controls).forEach( control => {
         control.markAllAsTouched();
       })
+    }else{
+    console.log("Enviando ... ");
+      this.formEmitter.emit(this.parseToJson());
     }
     return;
   }

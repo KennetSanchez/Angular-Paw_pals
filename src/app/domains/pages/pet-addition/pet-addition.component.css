@@ -1,17 +1,12 @@
 input{
-    padding: 1rem;
+    padding: 0.5rem;
     border-radius: 0.5rem;
     outline: 0.10rem solid grey;
-    height: 2rem;
     width: 100%;
 }
 
 input:focus{
     outline: 0.25rem solid rgb(103, 232, 249) ;
-}
-
-#description{
-    height: 4rem;
 }
 
 .invalid{

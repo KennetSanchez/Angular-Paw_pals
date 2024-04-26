@@ -54,6 +54,11 @@ export class PetService {
     return await delayOnPurpose(pet);
   }
 
+  async getPetsByOwnerId(id: string): Promise<Pet[]>{
+    let pets = this.pets.filter((currentPet) => currentPet.ownerId === id)
+    return await delayOnPurpose(pets);
+  }
+
   async addPet(
     name: string,
     breed: string,
@@ -61,10 +66,10 @@ export class PetService {
     weight: number,
     height: number,
     description: string,
-    location: string
+    location: string,
+    ownerId: string,
   ) {
     const petCount = this.pets.length;
-    const ownerCount = 1;
 
     const petToAdd: Pet = {
       name: name,
@@ -74,13 +79,16 @@ export class PetService {
       age: age,
       weight: weight,
       height: height,
-      ownerId: `o${petCount + 1}`,
-      petId: `p${ownerCount + 1}`,
+      ownerId: ownerId,
+      petId: `p${petCount + 1}`,
     };
 
     // Just to make time :p
     await delayOnPurpose({}).then(() => {
+      console.log('was ', this.pets)
       this.pets.push(petToAdd);
+      console.log('is ', this.pets)
+
     });
   }
 

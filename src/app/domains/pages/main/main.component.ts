@@ -15,20 +15,15 @@ export class MainComponent {
     pets = signal([] as Pet[]);
 
     ngOnInit(){
-        console.log("Init");
         this.loadData();
     }
 
     constructor(){
-        console.log("AAAAAAAAAAAAAAAAAAAA");
         this.loadData();
-        this.petServices.addPet('Adicional', 'Pug', 12, 90, 90, 'Por favor duermanlo', 'El infierno');
-        this.petServices.updatePet('p1', 'o1', 'Actualizado', 'fila', 12, 90, 90, 'Por favor duermanlo', 'El infierno')
     }
 
     async loadData(){
         const pets = await this.petServices.getPets();
-        console.log("Objeto servicio: ", pets);
         this.pets.set(pets);
     }
 }
