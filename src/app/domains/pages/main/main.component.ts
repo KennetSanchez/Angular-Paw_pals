@@ -1,7 +1,9 @@
-import { Component, inject, Signal, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { PetCardComponent } from "../pet-card/pet-card.component";
 import { PetService } from '../../services/pet.service';
 import { Pet } from '../../const/Pet';
+import { Owner } from '../../const/Owner';
+import { UserService } from '../../services/user.service';
 
 @Component({
     selector: 'app-main',
@@ -11,19 +13,33 @@ import { Pet } from '../../const/Pet';
     imports: [PetCardComponent]
 })
 export class MainComponent {
-    petServices = inject(PetService);
-    pets = signal([] as Pet[]);
 
-    ngOnInit(){
-        this.loadData();
-    }
+    petsService = inject(PetService);
+    usersService = inject(UserService);
+
+    pets = [] as Pet[]
+    owners = [] as Owner[];
+
+    petsAndOwners = signal([] as (Pet | Owner)[][]);
 
     constructor(){
         this.loadData();
     }
 
     async loadData(){
-        const pets = await this.petServices.getPets();
-        this.pets.set(pets);
+        const pets = await this.petsService.getPets();
+        
+        const promises = pets.map(async (pet)=>{
+            const owner = await this.getOwnerInfo(pet.ownerId);
+            return [pet, owner];
+        })
+
+        const petsAndOwners = await Promise.all(promises)
+        this.petsAndOwners.set(petsAndOwners);
+    }
+
+    private async getOwnerInfo(ownerId: string){
+        let ownerInfo = await this.usersService.getUserInfo(ownerId);
+        return ownerInfo;
     }
 }

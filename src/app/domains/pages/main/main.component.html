@@ -1,10 +1,10 @@
 <div class="w-full h-[90%] overflow-x-hidden">
   <section class=" w-full flex flex-row flex-wrap overflow-y-auto gap-4 p-4 justify-center content-center">
-    @for (currentPet of pets(); track $index) {
-    <app-pet-card [pet]="currentPet"></app-pet-card>
+    @for (currentPet of petsAndOwners(); track $index) {
+    <app-pet-card [petAndOwner]="currentPet"></app-pet-card>
     }
-    @for (currentPet of pets(); track $index) {
-      <app-pet-card [pet]="currentPet"></app-pet-card>
+    @for (currentPet of petsAndOwners(); track $index) {
+      <app-pet-card [petAndOwner]="currentPet"></app-pet-card>
       }
   </section>
 </div>

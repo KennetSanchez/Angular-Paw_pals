@@ -1,13 +1,19 @@
-<div class="w-[30vw] h-[35vh] bg-neutral-100 rounded-md p-4 flex shadow-md flex-wrap">
-  <h3 class="text-neutral-700 text-xl font-semibold text-center w-full">{{pet?.name}}</h3>
+<div
+  class="w-[30vw] h-[35vh] bg-neutral-100 rounded-md p-4 flex shadow-md flex-wrap hover:cursor-pointer"
+  (click)="isDetail=!isDetail"
+  >
+  <h3 class="text-neutral-700 text-xl font-semibold text-center w-full">
+    {{ pet?.name }}
+  </h3>
+  @if(isDetail){
   <div class="w-3/5">
     <div id="statsDiv" class="w-full h-[20vh] ml-4">
       <section class="w-full h-1/4 flex flex-row gap-2">
-        <h5>Raza: </h5>
+        <h5>Raza:</h5>
         <p>{{ pet?.breed }}</p>
       </section>
       <section class="w-full h-1/4 flex flex-row gap-2">
-        <h5>Peso: </h5>
+        <h5>Peso:</h5>
         <p>{{ pet?.weight }} kilos</p>
       </section>
       <section class="w-full h-1/4 flex flex-row gap-2">
@@ -15,11 +21,11 @@
         <p>{{ pet?.height }} cm</p>
       </section>
       <section class="w-full h-1/4 flex flex-row gap-2">
-        <h5>Edad: </h5>
+        <h5>Edad:</h5>
         <p>{{ pet?.age }} año(s)</p>
       </section>
       <section class="w-full h-1/4 flex flex-row gap-2">
-        <h5>Ubicación: </h5>
+        <h5>Ubicación:</h5>
         <p>{{ pet?.location }}</p>
       </section>
     </div>
@@ -28,4 +34,20 @@
     <div class="w-full h-full bg-neutral-300 rounded-lg"></div>
     <!-- <img src="" alt="Pet image" class="w-28 h-20"> -->
   </div>
+  }@else {
+  <div class="w-full h-[20vh] ml-4">
+    <section class="w-full h-1/3 flex flex-row gap-2">
+      <h5>Nombre cuidador/a:</h5>
+      <p>{{ owner?.ownersName }}</p>
+    </section>
+    <section class="w-full h-1/3 flex flex-row gap-2">
+      <h5>Teléfono:</h5>
+      <p>{{ owner?.ownersPhone }}</p>
+    </section>
+    <section class="w-full h-1/3 flex flex-row gap-2">
+      <h5>Email:</h5>
+      <p>{{ owner?.ownersEmail }}</p>
+    </section>
+  </div>
+  }
 </div>

@@ -1,10 +1,10 @@
 import { Pet } from "./Pet";
 
 export interface User{
-    id:'',
-    name: '',
-    hashedPassword:'',
-    phoneNumber:'',
-    email:'',
-    pets: Pet[],
+    id:string,
+    name: string,
+    hashedPassword:string,
+    phoneNumber:string,
+    email:string,
+    petsIds: string[],
 }

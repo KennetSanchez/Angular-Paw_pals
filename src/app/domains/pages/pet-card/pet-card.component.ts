@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { Pet } from '../../const/Pet';
+import { Owner } from '../../const/Owner';
 
 @Component({
     selector: 'app-pet-card',
@@ -9,5 +10,13 @@ import { Pet } from '../../const/Pet';
     imports: []
 })
 export class PetCardComponent {
-    @Input() pet: Pet | null = null;
+    @Input() petAndOwner: (Pet | Owner)[] = [];
+    isDetail = true;
+    owner : Owner | undefined;
+    pet : Pet | undefined;
+
+    ngOnInit(){
+        this.pet = this.petAndOwner[0] as Pet;
+        this.owner = this.petAndOwner[1] as Owner;
+    }
 }
