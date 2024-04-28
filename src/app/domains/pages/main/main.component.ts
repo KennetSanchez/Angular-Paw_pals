@@ -4,13 +4,14 @@ import { PetService } from '../../services/pet.service';
 import { Pet } from '../../const/Pet';
 import { Owner } from '../../const/Owner';
 import { UserService } from '../../services/user.service';
+import { LoadingComponent } from "../../shared/loading/loading.component";
 
 @Component({
     selector: 'app-main',
     standalone: true,
     templateUrl: './main.component.html',
     styleUrl: './main.component.css',
-    imports: [PetCardComponent]
+    imports: [PetCardComponent, LoadingComponent]
 })
 export class MainComponent {
 
@@ -21,6 +22,7 @@ export class MainComponent {
     owners = [] as Owner[];
 
     petsAndOwners = signal([] as (Pet | Owner)[][]);
+    isLoading = signal(true);
 
     constructor(){
         this.loadData();
@@ -36,6 +38,7 @@ export class MainComponent {
 
         const petsAndOwners = await Promise.all(promises)
         this.petsAndOwners.set(petsAndOwners);
+        this.isLoading.set(false);
     }
 
     private async getOwnerInfo(ownerId: string){

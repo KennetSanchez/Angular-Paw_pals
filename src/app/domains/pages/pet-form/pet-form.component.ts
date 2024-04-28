@@ -70,7 +70,12 @@ export class PetFormComponent {
   }
 
   cancel() {
-    console.log(this.previousData);
+    Object.values(this.formPet.controls).forEach((control) => {
+      control.setValue('');
+      control.markAsUntouched();
+    });
+    this.formEmitter.emit();
+    return;
   }
 
   submit() {

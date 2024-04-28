@@ -1,3 +1,7 @@
+@if(isLoading()){
+  <app-loading></app-loading>
+}
+
 <div class="w-full h-[90%] bg-page_primary_color flex flex-row flex-wrap items-center">
   @if(isAddingPet()){
     <div class="w-full h-full flex justify-center items-center">
@@ -11,9 +15,9 @@
       <h4 class="text-3xl text-text_black font-bold">Tus Mascotas</h4>
       <div class="w-full flex flex-row flex-wrap gap-4 justify-center">
 
-      @for (pet of myPets(); track $index) {
+      @for (pet of petsAndOwners(); track $index) {
           <div class="mt-4">
-              <!-- <app-pet-card [petAndOwner]="pet"/> -->
+              <app-pet-card [petAndOwner]="pet"/>
           </div>
       }@empty {
         <p>Aún no tienes mascotas registradas, ¿quieres agregar una?</p>

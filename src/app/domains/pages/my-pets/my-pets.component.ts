@@ -3,41 +3,49 @@ import { PetService } from '../../services/pet.service';
 import { Pet } from '../../const/Pet';
 import { PetCardComponent } from '../pet-card/pet-card.component';
 import { PetFormComponent } from '../pet-form/pet-form.component';
+import { Owner } from '../../const/Owner';
+import { UserService } from '../../services/user.service';
+import { LoadingComponent } from "../../shared/loading/loading.component";
 
 @Component({
-  selector: 'app-my-pets',
-  standalone: true,
-  templateUrl: './my-pets.component.html',
-  styleUrl: './my-pets.component.css',
-  imports: [PetFormComponent, PetCardComponent],
+    selector: 'app-my-pets',
+    standalone: true,
+    templateUrl: './my-pets.component.html',
+    styleUrl: './my-pets.component.css',
+    imports: [PetFormComponent, PetCardComponent, LoadingComponent]
 })
 export class MyPetsComponent {
-
   private petsService = inject(PetService);
-  private USER_ID = 'o1';
-  myPets = signal([] as Pet[]);
-  isAddingPet = signal(false);
+  private usersService = inject(UserService);
 
-  dummyPet : any = {
-  }
+  private USER_ID = 'o1';
+
+  petsAndOwners = signal([] as (Pet | Owner)[][]);
+  isAddingPet = signal(false);
+  isLoading = signal(true);
 
   ngOnInit() {
     this.loadData();
-    console.log(this.dummyPet);
   }
 
   async loadData() {
     const pets = await this.petsService.getPetsByOwnerId(this.USER_ID);
-    this.myPets.set(pets);
+    const owner = await this.usersService.getUserInfo(this.USER_ID);
+    const petAndOwner = pets.map((pet) => {
+      return [pet, owner];
+    })
+    this.petsAndOwners.set(petAndOwner);
+    this.isLoading.set(false);
   }
 
-  showForm(){
+  showForm() {
     this.isAddingPet.set(true);
   }
 
-  async addPet(event:any){
-    if(event){
-      let pet : Pet = event;
+  async addPet(event: any) {
+    if (event) {
+      this.isLoading.set(true);
+      let pet: Pet = event;
       await this.petsService.addPet(
         pet.name,
         pet.breed,
@@ -48,10 +56,12 @@ export class MyPetsComponent {
         pet.location,
         this.USER_ID
       );
-      this.loadData().then(
-        () => {this.isAddingPet.set(false)}
-      );
-      console.log(this.petsService.getPetsByOwnerId(this.USER_ID));
+      this.loadData().then(() => {
+        this.isLoading.set(false);
+        this.isAddingPet.set(false);
+      });
+    } else {
+      this.isAddingPet.set(false);
     }
   }
 }
