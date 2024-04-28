@@ -1,8 +1,10 @@
-<div class="w-full h-full flex flex-row flex-wrap p-4 gap-4">
-  <h3 class="text-3xl font-bold">Mascotas a pasear:</h3>
-  <section class="flex flex-row flex-wrap p-4 gap-4">
+<div class="w-full h-[90%] overflow-x-hidden">
+  <section class=" w-full flex flex-row flex-wrap overflow-y-auto gap-4 p-4 justify-center content-center">
     @for (currentPet of pets(); track $index) {
     <app-pet-card [pet]="currentPet"></app-pet-card>
     }
+    @for (currentPet of pets(); track $index) {
+      <app-pet-card [pet]="currentPet"></app-pet-card>
+      }
   </section>
 </div>

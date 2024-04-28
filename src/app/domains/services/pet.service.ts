@@ -85,10 +85,7 @@ export class PetService {
 
     // Just to make time :p
     await delayOnPurpose({}).then(() => {
-      console.log('was ', this.pets)
       this.pets.push(petToAdd);
-      console.log('is ', this.pets)
-
     });
   }
 

@@ -1,14 +1,14 @@
-<div class="w-full h-full bg-neutral-50 flex">
-  
+<div class="w-full h-[90%] bg-page_primary_color flex flex-row flex-wrap items-center">
   @if(isAddingPet()){
-    <div class="absolute w-full h-full bg-neutral-500 flex flex-col justify-center">
-      <div class="w-2/3 h-80 bg-neutral-100">
-        <app-pet-addition (formEmitter)="addPet($event)"></app-pet-addition>
+    <div class="w-full h-full flex justify-center items-center">
+      <div class="w-fit h-fit bg-neutral-100 py-2 px-8 rounded-md">
+        <h4 class="text-2xl font-semibold text-center">Registro</h4>
+        <app-pet-form (formEmitter)="addPet($event)" [previousData]="{}"></app-pet-form>
       </div>
     </div>  
   }@else{
-    <div class="w-full h-full flex-col gap-4">
-      <h4 class="text-xl p-4">Tus Mascotas</h4>
+    <div class="w-full h-full flex-col">
+      <h4 class="text-3xl text-text_black font-bold">Tus Mascotas</h4>
       <div class="w-full flex flex-row flex-wrap gap-4 justify-center">
 
       @for (pet of myPets(); track $index) {
@@ -21,7 +21,7 @@
     </div>
 
     <div class=" flex flex-row justify-center mt-4">
-      <button class="bg-cyan-200 rounded-md p-4 w-48 h-12 font-bold text-base text-neutral-50" (click)="showForm()">Agregar mascota</button>
+      <button class="bg-button_primary rounded-md p-4 w-48 h-12 font-bold text-base text-neutral-50" (click)="showForm()">Agregar mascota</button>
     </div>
     </div>
   }

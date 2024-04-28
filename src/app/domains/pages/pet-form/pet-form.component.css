@@ -1,8 +1,9 @@
 input{
-    padding: 0.5rem;
+    padding: 0.5vw;
     border-radius: 0.5rem;
     outline: 0.10rem solid grey;
-    width: 100%;
+    width: 40vw;
+    height: 2.5vw;
 }
 
 input:focus{

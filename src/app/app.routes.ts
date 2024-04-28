@@ -1,8 +1,8 @@
 import { Routes } from '@angular/router';
 import { MainComponent } from './domains/pages/main/main.component';
-import { PetAdditionComponent } from './domains/pages/pet-addition/pet-addition.component';
 import { NoPageComponent } from './domains/pages/no-page/no-page.component';
 import { MyPetsComponent } from './domains/pages/my-pets/my-pets.component';
+import { PetFormComponent } from './domains/pages/pet-form/pet-form.component';
 
 export const routes: Routes = [
   
@@ -20,7 +20,7 @@ export const routes: Routes = [
   },
   {
     path: 'pet-addition-form',
-    component: PetAdditionComponent,
+    component: PetFormComponent,
   },
   
   {

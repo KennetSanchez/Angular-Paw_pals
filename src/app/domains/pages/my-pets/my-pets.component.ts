@@ -1,15 +1,15 @@
 import { Component, inject, signal } from '@angular/core';
-import { PetAdditionComponent } from '../pet-addition/pet-addition.component';
 import { PetService } from '../../services/pet.service';
 import { Pet } from '../../const/Pet';
 import { PetCardComponent } from '../pet-card/pet-card.component';
+import { PetFormComponent } from '../pet-form/pet-form.component';
 
 @Component({
   selector: 'app-my-pets',
   standalone: true,
   templateUrl: './my-pets.component.html',
   styleUrl: './my-pets.component.css',
-  imports: [PetAdditionComponent, PetCardComponent],
+  imports: [PetFormComponent, PetCardComponent],
 })
 export class MyPetsComponent {
 
@@ -18,8 +18,12 @@ export class MyPetsComponent {
   myPets = signal([] as Pet[]);
   isAddingPet = signal(false);
 
+  dummyPet : any = {
+  }
+
   ngOnInit() {
     this.loadData();
+    console.log(this.dummyPet);
   }
 
   async loadData() {
