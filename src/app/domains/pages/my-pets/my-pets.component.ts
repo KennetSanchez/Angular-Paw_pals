@@ -6,6 +6,7 @@ import { PetFormComponent } from '../pet-form/pet-form.component';
 import { Owner } from '../../const/Owner';
 import { UserService } from '../../services/user.service';
 import { LoadingComponent } from "../../shared/loading/loading.component";
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-my-pets',
@@ -23,6 +24,7 @@ export class MyPetsComponent {
   petsAndOwners = signal([] as (Pet | Owner)[][]);
   isAddingPet = signal(false);
   isLoading = signal(true);
+  router = inject(Router);
 
   ngOnInit() {
     this.loadData();
@@ -40,6 +42,12 @@ export class MyPetsComponent {
 
   showForm() {
     this.isAddingPet.set(true);
+  }
+
+  showDetail(petAndOwner : (Pet | Owner)[]){
+    const pet : Pet = petAndOwner[0] as Pet;
+    const id = pet.petId;
+    this.router.navigate([`my-pets/${id}`])
   }
 
   async addPet(event: any) {

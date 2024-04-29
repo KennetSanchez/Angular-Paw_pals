@@ -1,1 +1,6 @@
-<p>pet-details works!</p>
+@if(isLoading()){
+  <app-loading/>
+}
+<div class="w-full h-full flex items-center justify-center">
+  <app-pet-form [previousData]="pet()" (formEmitter)="updatePet($event)"></app-pet-form>
+</div>

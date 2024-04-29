@@ -16,7 +16,7 @@
       <div class="w-full flex flex-row flex-wrap gap-4 justify-center">
 
       @for (pet of petsAndOwners(); track $index) {
-          <div class="mt-4">
+          <div (click)="showDetail(pet)" class="mt-4">
               <app-pet-card [petAndOwner]="pet"/>
           </div>
       }@empty {

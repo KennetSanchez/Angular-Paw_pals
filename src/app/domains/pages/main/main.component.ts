@@ -36,7 +36,7 @@ export class MainComponent {
             return [pet, owner];
         })
 
-        const petsAndOwners = await Promise.all(promises)
+        const petsAndOwners = await Promise.all(promises);
         this.petsAndOwners.set(petsAndOwners);
         this.isLoading.set(false);
     }

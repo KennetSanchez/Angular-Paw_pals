@@ -42,20 +42,31 @@ export class PetService {
     },
   ];
 
+  private saveData(): void {
+    localStorage.setItem('pets', JSON.stringify(this.pets));
+  }
+
+  private loadData() {
+    this.pets = JSON.parse(localStorage.getItem('pets')!);
+  }
+
   async getPets(): Promise<Pet[]> {
+    this.loadData();
     return await delayOnPurpose(this.pets);
   }
 
   async getPetById(id: string): Promise<Pet | undefined> {
+    this.loadData();
     let pet = this.pets.find((currentPet) => {
-      currentPet.petId === id;
+      currentPet.petId == id;
+      return currentPet;
     });
-
     return await delayOnPurpose(pet);
   }
 
-  async getPetsByOwnerId(id: string): Promise<Pet[]>{
-    let pets = this.pets.filter((currentPet) => currentPet.ownerId === id)
+  async getPetsByOwnerId(id: string): Promise<Pet[]> {
+    this.loadData();
+    let pets = this.pets.filter((currentPet) => currentPet.ownerId === id);
     return await delayOnPurpose(pets);
   }
 
@@ -67,8 +78,9 @@ export class PetService {
     height: number,
     description: string,
     location: string,
-    ownerId: string,
+    ownerId: string
   ) {
+    this.loadData();
     const petCount = this.pets.length;
 
     const petToAdd: Pet = {
@@ -86,6 +98,7 @@ export class PetService {
     // Just to make time :p
     await delayOnPurpose({}).then(() => {
       this.pets.push(petToAdd);
+      this.saveData();
     });
   }
 
@@ -111,19 +124,23 @@ export class PetService {
       ownerId: ownerId,
       petId: petId,
     };
+    this.loadData();
 
     // Just to make time :p
     await delayOnPurpose({}).then(() => {
       this.pets = this.pets.map((pet) =>
         pet.petId === petId ? updatedPet : pet
       );
+      this.saveData();
     });
   }
 
   async removePet(petId: string) {
+    this.loadData();
     // Just to make time :p
     await delayOnPurpose({}).then(() => {
       this.pets = this.pets.filter((pet) => pet.petId !== petId);
+      this.saveData();
     });
   }
 }

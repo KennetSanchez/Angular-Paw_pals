@@ -7,6 +7,7 @@ import {
 } from '@angular/forms';
 import { Pet } from '../../const/Pet';
 import { PetCardComponent } from '../pet-card/pet-card.component';
+import { setFormValue } from '../../utils/tools';
 
 @Component({
   selector: 'app-pet-form',
@@ -16,8 +17,6 @@ import { PetCardComponent } from '../pet-card/pet-card.component';
   imports: [ReactiveFormsModule, PetCardComponent],
 })
 export class PetFormComponent {
-  userId = '';
-  petId = '';
 
   @Output() formEmitter = new EventEmitter();
   @Input() previousData: any = {};
@@ -35,30 +34,25 @@ export class PetFormComponent {
     });
   }
 
-  ngOnInit() {
+  ngOnChanges() {
     let data: Pet = this.previousData;
-    console.log(data);
-    this.setValue('name', data.name);
-    this.setValue('description', data.description);
-    this.setValue('breed', data.breed);
-    this.setValue('age', data.age + '');
-    this.setValue('weight', data.weight + '');
-    this.setValue('height', data.height + '');
-    this.setValue('location', data.location);
+    setFormValue('name', data.name, this.formPet);
+    setFormValue('description', data.description, this.formPet);
+    setFormValue('breed', data.breed, this.formPet);
+    setFormValue('age', data.age + '', this.formPet);
+    setFormValue('weight', data.weight + '', this.formPet);
+    setFormValue('height', data.height + '', this.formPet);
+    setFormValue('location', data.location, this.formPet);
   }
 
   private getValue(inputName: string) {
     return this.formPet.get(inputName)?.value;
   }
 
-  private setValue(inputName: string, value: string) {
-    this.formPet.get(inputName)?.setValue(value);
-  }
-
   private parseToJson(): Pet {
     return {
-      ownerId: this.userId,
-      petId: this.petId,
+      ownerId: '',
+      petId: '',
       name: this.getValue('name'),
       description: this.getValue('description'),
       breed: this.getValue('breed'),
@@ -79,15 +73,11 @@ export class PetFormComponent {
   }
 
   submit() {
-    console.log('Submit');
-
     if (this.formPet.invalid) {
-      console.log('Información errónea');
       Object.values(this.formPet.controls).forEach((control) => {
         control.markAllAsTouched();
       });
     } else {
-      console.log('Enviando ... ');
       this.formEmitter.emit(this.parseToJson());
     }
     return;
