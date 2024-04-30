@@ -1,4 +1,14 @@
-<div class="w-full h-full flex justify-center items-center">
-    <app-user-form (formEmitter)="signUp($event)" [isRegister]="true" [secondaryButtonText]="'Iniciar sesión'" [primaryButtonText]="'Registrarse'"></app-user-form>
+@if (isLoading()) {
+<app-loading></app-loading>
+}
+<div class="w-full h-full flex justify-center items-center bg-page_primary_color">
+  <div class="w-fit h-fit bg-neutral-100 py-2 px-8 rounded-md">
+    <h4 class="text-2xl font-semibold text-center">Registro</h4>
+    <app-user-form
+      (formEmitter)="signUp($event)"
+      [isRegister]="true"
+      [secondaryButtonText]="'Iniciar sesión'"
+      [primaryButtonText]="'Registrarse'"
+    ></app-user-form>
   </div>
-  
+</div>

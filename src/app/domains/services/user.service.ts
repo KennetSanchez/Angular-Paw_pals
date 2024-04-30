@@ -52,6 +52,22 @@ export class UserService {
     }
   }
 
+  async wasWelcomed(){
+    this.loadData();
+
+    const userId = await this.getCurrentUserId();
+    this.users.map(mappedUser => {
+      if(mappedUser.id === userId){
+        console.log(this.users);
+        mappedUser.isFirstTime = false;
+      }
+
+      return mappedUser;
+    })
+    console.log(this.users);
+    this.saveData();
+  }
+
   async addUser(newUser: User): Promise<boolean> {
     this.loadData();
     const user = this.users.find((user) => user.email === newUser.email);
@@ -89,22 +105,25 @@ export class UserService {
     return delayOnPurpose(info);
   }
 
-  async login(email: string, hashedPassword: string) {
+  async login(email: string, hashedPassword: string) : Promise<[boolean, boolean]> {
     this.loadData();
     let wasSuccessful: boolean = false;
+    let isNew: boolean = false;
+
     this.users.filter((currentUser) => {
       if (
         email === currentUser.email &&
         hashedPassword === currentUser.hashedPassword
       ) {
-        currentUser.isFirstTime = false;
-        localStorage.setItem('currentUser', JSON.stringify(currentUser));
+        isNew = currentUser.isFirstTime;
         wasSuccessful = true;
+
+        localStorage.setItem('currentUser', JSON.stringify(currentUser));
       } else {
         return;
       }
     });
-    return delayOnPurpose(wasSuccessful);
+    return delayOnPurpose([wasSuccessful, isNew]);
   }
 
   async updateUser(

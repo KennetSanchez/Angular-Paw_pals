@@ -4,13 +4,14 @@ import { Router } from '@angular/router';
 import { UserService } from '../../services/user.service';
 import { LoginFormComponent } from "../login-form/login-form.component";
 import { Credentials } from '../../const/Credentials';
+import { LoadingComponent } from "../../shared/loading/loading.component";
 
 @Component({
     selector: 'app-login',
     standalone: true,
     templateUrl: './login.component.html',
     styleUrl: './login.component.css',
-    imports: [LoginFormComponent]
+    imports: [LoginFormComponent, LoadingComponent]
 })
 export class LoginComponent {
   user = signal({} as User);
@@ -24,14 +25,16 @@ export class LoginComponent {
       this.isLoading.set(true);
       let credentials: Credentials = event;
 
-      const logged = await this.userService.login(
+      const [logged, isNew] = await this.userService.login(
         credentials.email,
         credentials.password,
       );
-      
+
       this.isLoading.set(false);
 
-      if (logged) {
+      if (logged && isNew) {
+        this.router.navigate(['introduction']);
+      } else if(logged){
         this.router.navigate(['home']);
       } else {
         alert('Credenciales incorectas');

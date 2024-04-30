@@ -28,18 +28,17 @@ export class ProfileComponent {
     const userFound = await this.usersService.getUserById(userId);
     this.user.set(userFound);
     this.isLoading.set(false);
-    console.log(this.user());
   }
 
   async updateProfile(event: any) {
     if (event) {
       this.isLoading.set(true);
-
       let newUser: User = event;
       await this.usersService.updateUser(newUser);
       this.isLoading.set(false);
       this.router.navigate(['home']);
     } else {
+      localStorage.removeItem('currentUser');
       this.router.navigate(['login']);
     }
   }

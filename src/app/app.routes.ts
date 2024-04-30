@@ -7,6 +7,7 @@ import { ProfileComponent } from './domains/pages/profile/profile.component';
 import { LoginComponent } from './domains/pages/login/login.component';
 import { sessionGuardGuard } from './domains/guardians/session-guard.guard';
 import { RegisterComponent } from './domains/pages/register/register.component';
+import { IntroductionComponent } from './domains/pages/introduction/introduction.component';
 
 export const routes: Routes = [
   {
@@ -26,6 +27,11 @@ export const routes: Routes = [
         path: '',
         pathMatch: 'full',
         redirectTo: 'home'
+      },
+      {
+        path: 'introduction',
+        title: 'Introducción',
+        component: IntroductionComponent,
       },
       {
         path: 'home',

@@ -3,13 +3,14 @@ import { UserFormComponent } from '../user-form/user-form.component';
 import { Router } from '@angular/router';
 import { UserService } from '../../services/user.service';
 import { User } from '../../const/User';
+import { LoadingComponent } from "../../shared/loading/loading.component";
 
 @Component({
-  selector: 'app-register',
-  standalone: true,
-  templateUrl: './register.component.html',
-  styleUrl: './register.component.css',
-  imports: [UserFormComponent],
+    selector: 'app-register',
+    standalone: true,
+    templateUrl: './register.component.html',
+    styleUrl: './register.component.css',
+    imports: [UserFormComponent, LoadingComponent]
 })
 export class RegisterComponent {
   isLoading = signal(false);
@@ -29,7 +30,7 @@ export class RegisterComponent {
         alert('Hubo un problema al crear la cuenta. El correo parece estar en uso');
       }
     } else {
-      this.router.navigate(['register']);
+      this.router.navigate(['login']);
     }
   }
 }

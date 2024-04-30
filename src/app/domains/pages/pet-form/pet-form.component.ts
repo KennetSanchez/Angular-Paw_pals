@@ -64,8 +64,9 @@ export class PetFormComponent {
       control.setValue('');
       control.markAsUntouched();
     });
-    this.formEmitter.emit();
-    return;
+    console.log('Cancel form');
+    
+    this.formEmitter.emit('');
   }
 
   submit() {
@@ -76,6 +77,5 @@ export class PetFormComponent {
     } else {
       this.formEmitter.emit(this.parseToJson());
     }
-    return;
   }
 }

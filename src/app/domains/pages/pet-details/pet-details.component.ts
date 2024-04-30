@@ -3,15 +3,15 @@ import { PetFormComponent } from '../pet-form/pet-form.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Pet } from '../../const/Pet';
 import { PetService } from '../../services/pet.service';
-import { LoadingComponent } from "../../shared/loading/loading.component";
+import { LoadingComponent } from '../../shared/loading/loading.component';
 import { UserService } from '../../services/user.service';
 
 @Component({
-    selector: 'app-pet-details',
-    standalone: true,
-    templateUrl: './pet-details.component.html',
-    styleUrl: './pet-details.component.css',
-    imports: [PetFormComponent, LoadingComponent]
+  selector: 'app-pet-details',
+  standalone: true,
+  templateUrl: './pet-details.component.html',
+  styleUrl: './pet-details.component.css',
+  imports: [PetFormComponent, LoadingComponent],
 })
 export class PetDetailsComponent {
   pet = signal({} as Pet | undefined);
@@ -19,9 +19,9 @@ export class PetDetailsComponent {
   router = new Router();
   petsService = inject(PetService);
   usersService = inject(UserService);
-  
-  private userId : string = '';
-  private petId : string = '';
+
+  private userId: string = '';
+  private petId: string = '';
 
   constructor(private route: ActivatedRoute) {}
 
@@ -31,7 +31,7 @@ export class PetDetailsComponent {
   }
 
   async loadData() {
-    this.petId = this.route.snapshot.paramMap.get('id')+'';
+    this.petId = this.route.snapshot.paramMap.get('id') + '';
     this.userId = await this.usersService.getCurrentUserId();
     let petFound = await this.petsService.getPetById(this.petId);
     this.pet.set(petFound);
@@ -53,12 +53,10 @@ export class PetDetailsComponent {
         pet.weight,
         pet.height,
         pet.description,
-        pet.location,
+        pet.location
       );
-      this.loadData().then(() => {
-        this.router.navigate(['my-pets']);
-        this.isLoading.set(false);
-      });
     }
+    this.router.navigate(['my-pets']);
+    this.isLoading.set(false);
   }
 }

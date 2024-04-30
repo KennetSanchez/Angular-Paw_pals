@@ -8,6 +8,7 @@
     id="name"
     type="text"
     formControlName="name"
+    placeholder="Kira"
   />
 
   <label for="breed">Raza: </label>
@@ -15,6 +16,7 @@
     id="breed"
     type="text"
     formControlName="breed"
+    placeholder="Pitbull"
     [class.invalid]="
       formPet.get('breed')?.invalid && formPet.get('breed')?.touched
     "
@@ -29,6 +31,7 @@
     type="number"
     min="0"
     formControlName="age"
+    placeholder="1"
   />
 
   <label for="weight">Peso (kg): </label>
@@ -42,6 +45,7 @@
     id="weight"
     type="number"
     min="0"
+    placeholder="02"
     formControlName="weight"
   />
 
@@ -56,6 +60,7 @@
     id="height"
     type="number"
     min="0"
+    placeholder="20"
     formControlName="height"
   />
 
@@ -69,6 +74,7 @@
     "
     id="location"
     type="text"
+    placeholder="Salamanca"
     formControlName="location"
   />
 
@@ -82,6 +88,7 @@
     "
     id="description"
     type="text"
+    placeholder="Juguetona, alegre, enérgica"
     formControlName="description"
   />
 

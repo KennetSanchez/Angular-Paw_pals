@@ -1,0 +1,78 @@
+@if(isLoading()){
+    <app-loading></app-loading>
+}
+<div
+  class="w-full h-full absolute top-0 left-0 right-0 p-8 bg-neutral-100 flex justify-center items-center"
+>
+  <div
+    class="w-[90vw] h-[80vh] relative flex flex-col justify-center p-16 bg-neutral-200 rounded-sm drop-shadow-md"
+  >
+    <section class="w-fit h-fit p-4 mb-4">
+      <h3 class="text-3xl font-bold mb-2 text-neutral-800">
+        ¿De qué se trata?
+      </h3>
+      <p class="text-xl text-neutral-700 ml-4">
+        Paw Pals es un proyecto que busca facilitar el contacto entre personas
+        que necesitan pasear a sus mascotas y personas dispuestas a pasearlas
+      </p>
+    </section>
+
+    <div class="w-fit h-fit p-4 mb-4">
+      <h3 class="text-3xl font-bold mb-2 text-neutral-800">¿Cómo funciona?</h3>
+
+      <section class="w-fit h-fit mb-8">
+        <h4 class="text-2xl font-semibold mb-2 text-neutral-800">
+          Contacto entre personsas
+        </h4>
+        <p class="text-xl text-neutral-700 ml-4">
+          Al crear una cuenta e iniciar sesión, tendrás acceso a la página
+          principal donde verás información sobre todas las mascotas registradas
+          en el sistema. Si te interesa pasear una mascota, puedes hacer
+          <i>click</i> para rotar la tarjeta y ver la información de contacto
+          del dueño
+        </p>
+      </section>
+
+      <section class="w-fit h-fit mb-8">
+        <h4 class="text-2xl font-semibold mb-4 text-neutral-800">
+          Registrar tus mascotas
+        </h4>
+        <p class="text-xl text-neutral-700 ml-4">
+          Al hacer <i>click</i> en la opción "Mis mascotas" tendrás tres
+          opciones:
+        </p>
+        <ul class="list-disc ml-8">
+          <li class="text-xl text-neutral-700">
+            Visualizar las mascotas que tienes registradas
+          </li>
+          <li class="text-xl text-neutral-700">
+            Registrar una nueva mascota haciendo <i>click</i> en el botón de
+            "Agregar mascota"
+          </li>
+          <li class="text-xl text-neutral-700">
+            Editar la información de las mascotas que tienes registradas al
+            hacer
+            <i>click</i>
+            en la tarjeta de la mascota que quieres actualizar para ser llevado
+            al formulario de actualización
+          </li>
+        </ul>
+      </section>
+      <section class="w-fit h-fit mb-8">
+        <h4 class="text-2xl font-semibold mb-4 text-neutral-800">
+          Actualización de tu perfil
+        </h4>
+        <p class="text-xl text-neutral-700 ml-4">
+          En la barra de navegación encontrarás una opción llamada "Mi perfil".
+          Desde allí podrás actualizar los datos de tu perfil, o cerrar sesión.
+        </p>
+      </section>
+    </div>
+    <button
+      class="self-center w-fit h-fit px-8 py-4 rounded-md bg-button_primary shadow-sm text-neutral-100 font-bold text-2xl"
+      (click)="continue()"
+    >
+      Continuar
+    </button>
+  </div>
+</div>

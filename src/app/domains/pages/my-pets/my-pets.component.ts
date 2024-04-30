@@ -5,49 +5,49 @@ import { PetCardComponent } from '../pet-card/pet-card.component';
 import { PetFormComponent } from '../pet-form/pet-form.component';
 import { Owner } from '../../const/Owner';
 import { UserService } from '../../services/user.service';
-import { LoadingComponent } from "../../shared/loading/loading.component";
+import { LoadingComponent } from '../../shared/loading/loading.component';
 import { Router } from '@angular/router';
 
 @Component({
-    selector: 'app-my-pets',
-    standalone: true,
-    templateUrl: './my-pets.component.html',
-    styleUrl: './my-pets.component.css',
-    imports: [PetFormComponent, PetCardComponent, LoadingComponent]
+  selector: 'app-my-pets',
+  standalone: true,
+  templateUrl: './my-pets.component.html',
+  styleUrl: './my-pets.component.css',
+  imports: [PetFormComponent, PetCardComponent, LoadingComponent],
 })
 export class MyPetsComponent {
   private petsService = inject(PetService);
   private usersService = inject(UserService);
-
-  private USER_ID = 'o1';
+  userId: string = '';
 
   petsAndOwners = signal([] as (Pet | Owner)[][]);
   isAddingPet = signal(false);
   isLoading = signal(true);
   router = inject(Router);
 
-  ngOnInit() {
-    this.loadData();
+  async ngOnInit() {
+    await this.loadData();
+    this.isLoading.set(false);
   }
 
   async loadData() {
-    const pets = await this.petsService.getPetsByOwnerId(this.USER_ID);
-    const owner = await this.usersService.getUserInfo(this.USER_ID);
+    this.userId = await this.usersService.getCurrentUserId();
+    const pets = await this.petsService.getPetsByOwnerId(this.userId);
+    const owner = await this.usersService.getUserInfo(this.userId);
     const petAndOwner = pets.map((pet) => {
       return [pet, owner];
-    })
+    });
     this.petsAndOwners.set(petAndOwner);
-    this.isLoading.set(false);
   }
 
   showForm() {
     this.isAddingPet.set(true);
   }
 
-  showDetail(petAndOwner : (Pet | Owner)[]){
-    const pet : Pet = petAndOwner[0] as Pet;
+  showDetail(petAndOwner: (Pet | Owner)[]) {
+    const pet: Pet = petAndOwner[0] as Pet;
     const id = pet.petId;
-    this.router.navigate([`my-pets/${id}`])
+    this.router.navigate([`my-pets/${id}`]);
   }
 
   async addPet(event: any) {
@@ -62,14 +62,11 @@ export class MyPetsComponent {
         pet.height,
         pet.description,
         pet.location,
-        this.USER_ID
+        this.userId
       );
-      this.loadData().then(() => {
-        this.isLoading.set(false);
-        this.isAddingPet.set(false);
-      });
-    } else {
-      this.isAddingPet.set(false);
     }
+    await this.loadData();
+    this.isLoading.set(false);
+    this.isAddingPet.set(false);
   }
 }
