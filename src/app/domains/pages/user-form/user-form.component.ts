@@ -18,7 +18,9 @@ import { aReallyCoolAndActualHash, getFormValue, setFormValue } from '../../util
 export class UserFormComponent {
   @Output() formEmitter = new EventEmitter();
   @Input() previousData: any = {};
-  @Input() buttonText  = signal('');
+
+  @Input() isRegister : any = {};
+  @Input() buttonText : any = {};
 
   formUser: FormGroup;
 
@@ -34,6 +36,7 @@ export class UserFormComponent {
   private parseToJson(){
     const preHashedPassword = getFormValue('password', this.formUser);
     const json : User = {
+      isFirstTime: this.isRegister,
       id: '',
       name: getFormValue('name', this.formUser),
       hashedPassword: aReallyCoolAndActualHash(preHashedPassword),

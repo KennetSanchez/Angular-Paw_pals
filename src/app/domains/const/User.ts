@@ -1,6 +1,7 @@
 import { Pet } from "./Pet";
 
 export interface User{
+    isFirstTime: boolean,
     id:string,
     name: string,
     hashedPassword:string,

@@ -1,5 +1,4 @@
 import { Component, inject, signal } from '@angular/core';
-import { UserFormComponent } from '../user-form/user-form.component';
 import { User } from '../../const/User';
 import { Router } from '@angular/router';
 import { UserService } from '../../services/user.service';
@@ -11,17 +10,15 @@ import { Credentials } from '../../const/Credentials';
     standalone: true,
     templateUrl: './login.component.html',
     styleUrl: './login.component.css',
-    imports: [UserFormComponent, LoginFormComponent]
+    imports: [LoginFormComponent]
 })
 export class LoginComponent {
   user = signal({} as User);
   isLoading = signal(false);
-  router = new Router();
+  router = inject(Router);
 
   userService = inject(UserService);
-
-  constructor() {}
-
+  
   async login(event: any) {
     if (event) {
       this.isLoading.set(true);
@@ -39,6 +36,8 @@ export class LoginComponent {
       } else {
         alert('Credenciales incorectas');
       }
+    }else{
+      this.router.navigate(['register'])
     }
   }
 }

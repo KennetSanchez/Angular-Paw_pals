@@ -6,9 +6,14 @@ import { PetDetailsComponent } from './domains/pages/pet-details/pet-details.com
 import { ProfileComponent } from './domains/pages/profile/profile.component';
 import { LoginComponent } from './domains/pages/login/login.component';
 import { sessionGuardGuard } from './domains/guardians/session-guard.guard';
+import { RegisterComponent } from './domains/pages/register/register.component';
 
 export const routes: Routes = [
   {
+    path: 'register',
+    title: 'Registro',
+    component: RegisterComponent,
+  },{
     path: 'login',
     title: 'Iniciar sesión',
     component: LoginComponent,

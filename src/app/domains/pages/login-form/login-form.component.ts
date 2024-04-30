@@ -37,12 +37,12 @@ export class LoginFormComponent {
     return json;
   }
 
-  cancel() {
+  goToRegister() {
     Object.values(this.formLogin.controls).forEach((control) => {
       control.setValue('');
       control.markAsUntouched();
     });
-    this.formEmitter.emit(this.parseToJson());
+    this.formEmitter.emit(undefined);
     return;
   }
 

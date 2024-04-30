@@ -9,6 +9,7 @@ import { Owner } from '../const/Owner';
 export class UserService {
   users: User[] = [
     {
+      isFirstTime: true,
       id: 'o1',
       name: 'Ignacio',
       hashedPassword: 'hashMeThis12345678sihTeMhsah',
@@ -17,6 +18,7 @@ export class UserService {
       petsIds: ['p1', 'p2'],
     },
     {
+      isFirstTime: true,
       id: 'o2',
       name: 'Iñaki',
       hashedPassword: 'hashMeThis12345678sihTeMhsah',
@@ -25,6 +27,7 @@ export class UserService {
       petsIds: ['p3'],
     },
     {
+      isFirstTime: true,
       id: 'o3',
       name: 'zehcnaS tenneK',
       hashedPassword: 'hashMeThis12345678sihTeMhsah',
@@ -33,6 +36,7 @@ export class UserService {
       petsIds: [],
     },
     {
+      isFirstTime: true,
       id: 'o4',
       name: 'ADMIN',
       hashedPassword: 'hashMeThis12345678sihTeMhsah',
@@ -43,26 +47,22 @@ export class UserService {
   ];
 
   constructor() {
-    if(localStorage.getItem('users') === undefined){
+    if (localStorage.getItem('users') === undefined) {
       this.saveData();
     }
   }
 
-  async addUser() {
+  async addUser(newUser: User): Promise<boolean> {
     this.loadData();
-    const newUser: User = {
-      id: '',
-      name: '',
-      hashedPassword: '',
-      email: '',
-      phoneNumber: '',
-      petsIds: [],
-    };
-
-    delayOnPurpose({}).then(() => {
+    const user = this.users.find((user) => user.email === newUser.email);
+    
+    if (user) {
+      return delayOnPurpose(false);
+    } else {
       this.users.push(newUser);
-    });
-    this.saveData();
+      this.saveData();
+      return delayOnPurpose(true);
+    }
   }
 
   async getUserById(id: string): Promise<User | undefined> {
@@ -86,9 +86,13 @@ export class UserService {
 
   async login(email: string, hashedPassword: string) {
     this.loadData();
-    let wasSuccessful : boolean = false;
+    let wasSuccessful: boolean = false;
     this.users.filter((currentUser) => {
-      if (email === currentUser.email && hashedPassword === currentUser.hashedPassword) {
+      if (
+        email === currentUser.email &&
+        hashedPassword === currentUser.hashedPassword
+      ) {
+        currentUser.isFirstTime = false;
         localStorage.setItem('currentUser', JSON.stringify(currentUser));
         wasSuccessful = true;
       } else {
@@ -108,6 +112,7 @@ export class UserService {
     this.loadData();
     const oldUser = this.users.filter((user) => user.id === id)[0];
     const updatedUser: User = {
+      isFirstTime: false,
       id: id,
       name: name,
       hashedPassword: aReallyCoolAndActualHash(password),
