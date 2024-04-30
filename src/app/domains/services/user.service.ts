@@ -11,7 +11,7 @@ export class UserService {
     {
       id: 'o1',
       name: 'Ignacio',
-      hashedPassword: 'asdasdasd12312312edasasda',
+      hashedPassword: 'hashMeThis12345678sihTeMhsah',
       phoneNumber: '+34613096754',
       email: 'ignaPro@gmail.com',
       petsIds: ['p1', 'p2'],
@@ -19,17 +19,25 @@ export class UserService {
     {
       id: 'o2',
       name: 'Iñaki',
-      hashedPassword: 'asda123123sdasd12312312edasasda',
+      hashedPassword: 'hashMeThis12345678sihTeMhsah',
       phoneNumber: '+34613096314',
       email: 'inaPro@gmail.com',
       petsIds: ['p3'],
     },
     {
       id: 'o3',
-      name: 'Papu pro',
+      name: 'zehcnaS tenneK',
       hashedPassword: 'hashMeThis12345678sihTeMhsah',
       phoneNumber: '+34123456789',
       email: 'kesasaro@gmail.com',
+      petsIds: [],
+    },
+    {
+      id: 'o4',
+      name: 'ADMIN',
+      hashedPassword: 'hashMeThis12345678sihTeMhsah',
+      phoneNumber: '+34123456789',
+      email: 'aRealAdmin@pawPals.com',
       petsIds: [],
     },
   ];
@@ -78,15 +86,16 @@ export class UserService {
 
   async login(email: string, hashedPassword: string) {
     this.loadData();
+    let wasSuccessful : boolean = false;
     this.users.filter((currentUser) => {
-      if (email === currentUser.email && hashedPassword === hashedPassword) {
-        localStorage.setItem('userId', currentUser.id);
-        return delayOnPurpose(true);
+      if (email === currentUser.email && hashedPassword === currentUser.hashedPassword) {
+        localStorage.setItem('currentUser', JSON.stringify(currentUser));
+        wasSuccessful = true;
       } else {
         return;
       }
     });
-    return delayOnPurpose(false);
+    return delayOnPurpose(wasSuccessful);
   }
 
   async updateUser(

@@ -3,6 +3,7 @@ import { UserFormComponent } from '../../shared/user-form/user-form.component';
 import { User } from '../../const/User';
 import { Router } from '@angular/router';
 import { UserService } from '../../services/user.service';
+import { aReallyCoolAndActualHash } from '../../utils/tools';
 
 @Component({
   selector: 'app-login',
@@ -21,14 +22,22 @@ export class LoginComponent {
   constructor() {}
 
   async login(event: any) {
-    console.log(event);
     if (event) {
       this.isLoading.set(true);
       let user: User = event;
 
-      await this.userService.login(user.email, user.hashedPassword);
-      this.router.navigate(['home']);
+      const logged = await this.userService.login(
+        user.email,
+        user.hashedPassword
+      );
+      
       this.isLoading.set(false);
+
+      if (logged) {
+        this.router.navigate(['home']);
+      } else {
+        alert('Credenciales incorectas');
+      }
     }
   }
 }
