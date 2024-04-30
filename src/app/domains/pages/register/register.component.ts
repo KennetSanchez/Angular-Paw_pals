@@ -23,7 +23,6 @@ export class RegisterComponent {
       let newUser: User = event;
       const created = await this.usersService.addUser(newUser);
       this.isLoading.set(false);
-    console.log(created);
       if (created) {
         this.router.navigate(['home']);
       } else {

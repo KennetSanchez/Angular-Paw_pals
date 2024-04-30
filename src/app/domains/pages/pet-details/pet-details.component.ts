@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Pet } from '../../const/Pet';
 import { PetService } from '../../services/pet.service';
 import { LoadingComponent } from "../../shared/loading/loading.component";
+import { UserService } from '../../services/user.service';
 
 @Component({
     selector: 'app-pet-details',
@@ -17,7 +18,9 @@ export class PetDetailsComponent {
   isLoading = signal(false);
   router = new Router();
   petsService = inject(PetService);
-  private USER_ID  = 'o1';
+  usersService = inject(UserService);
+  
+  private userId : string = '';
   private petId : string = '';
 
   constructor(private route: ActivatedRoute) {}
@@ -29,8 +32,9 @@ export class PetDetailsComponent {
 
   async loadData() {
     this.petId = this.route.snapshot.paramMap.get('id')+'';
-    let temp = await this.petsService.getPetById(this.petId);
-    this.pet.set(temp);
+    this.userId = await this.usersService.getCurrentUserId();
+    let petFound = await this.petsService.getPetById(this.petId);
+    this.pet.set(petFound);
     this.isLoading.set(false);
     return;
   }
@@ -42,7 +46,7 @@ export class PetDetailsComponent {
 
       await this.petsService.updatePet(
         this.petId,
-        this.USER_ID,
+        this.userId,
         pet.name,
         pet.breed,
         pet.age,

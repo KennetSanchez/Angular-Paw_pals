@@ -65,6 +65,11 @@ export class UserService {
     }
   }
 
+  async getCurrentUserId() : Promise<string>{
+    const currentUser = JSON.parse(localStorage.getItem('currentUser')!) as User;
+    return delayOnPurpose(currentUser.id);
+  }
+
   async getUserById(id: string): Promise<User | undefined> {
     this.loadData();
     let user = this.users.find((user) => user.id === id);
@@ -103,26 +108,13 @@ export class UserService {
   }
 
   async updateUser(
-    id: string,
-    name: string,
-    password: string,
-    email: string,
-    phoneNumber: string
+    updatedUser : User
   ) {
     this.loadData();
-    const oldUser = this.users.filter((user) => user.id === id)[0];
-    const updatedUser: User = {
-      isFirstTime: false,
-      id: id,
-      name: name,
-      hashedPassword: aReallyCoolAndActualHash(password),
-      phoneNumber: phoneNumber,
-      email: email,
-      petsIds: oldUser.petsIds,
-    };
+    const currentUser = JSON.parse(localStorage.getItem('currentUser')!) as User;
 
     this.users.map((user) => {
-      user.id === id ? updatedUser : user;
+      user.id === currentUser.id ? updatedUser : user;
     });
     this.saveData();
   }

@@ -20,7 +20,8 @@ export class UserFormComponent {
   @Input() previousData: any = {};
 
   @Input() isRegister : any = {};
-  @Input() buttonText : any = {};
+  @Input() primaryButtonText : string = '';
+  @Input() secondaryButtonText : string = '';
 
   formUser: FormGroup;
 
@@ -52,6 +53,7 @@ export class UserFormComponent {
     let data: User = this.previousData;
     setFormValue('name', data.name, this.formUser);
     setFormValue('email', data.email, this.formUser);
+    setFormValue('password', data.hashedPassword, this.formUser)
     setFormValue('phoneNumber', data.phoneNumber, this.formUser);
   }
 
