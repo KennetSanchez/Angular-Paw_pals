@@ -42,6 +42,12 @@ export class PetService {
     },
   ];
 
+  constructor(){
+    if(localStorage.getItem('pets') === undefined){
+      this.saveData();
+    }
+  }
+
   private saveData(): void {
     localStorage.setItem('pets', JSON.stringify(this.pets));
   }

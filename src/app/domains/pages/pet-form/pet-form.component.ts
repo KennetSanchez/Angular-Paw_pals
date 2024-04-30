@@ -7,7 +7,7 @@ import {
 } from '@angular/forms';
 import { Pet } from '../../const/Pet';
 import { PetCardComponent } from '../pet-card/pet-card.component';
-import { setFormValue } from '../../utils/tools';
+import { getFormValue, setFormValue } from '../../utils/tools';
 
 @Component({
   selector: 'app-pet-form',
@@ -45,21 +45,17 @@ export class PetFormComponent {
     setFormValue('location', data.location, this.formPet);
   }
 
-  private getValue(inputName: string) {
-    return this.formPet.get(inputName)?.value;
-  }
-
   private parseToJson(): Pet {
     return {
       ownerId: '',
       petId: '',
-      name: this.getValue('name'),
-      description: this.getValue('description'),
-      breed: this.getValue('breed'),
-      weight: Number.parseFloat(this.getValue('weight')),
-      height: Number.parseFloat(this.getValue('height')),
-      age: Number.parseFloat(this.getValue('age')),
-      location: this.getValue('location'),
+      name: getFormValue('name', this.formPet),
+      description: getFormValue('description', this.formPet),
+      breed: getFormValue('breed', this.formPet),
+      weight: Number.parseFloat(getFormValue('weight', this.formPet)),
+      height: Number.parseFloat(getFormValue('height', this.formPet)),
+      age: Number.parseFloat(getFormValue('age', this.formPet)),
+      location: getFormValue('location', this.formPet),
     };
   }
 

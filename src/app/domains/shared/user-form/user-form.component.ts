@@ -1,33 +1,75 @@
 import { Component, EventEmitter, Input, input, Output } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { User } from '../../const/User';
-import { setFormValue } from '../../utils/tools';
+import { aReallyCoolAndActualHash, getFormValue, setFormValue } from '../../utils/tools';
 
 @Component({
   selector: 'app-user-form',
   standalone: true,
   imports: [ReactiveFormsModule],
   templateUrl: './user-form.component.html',
-  styleUrl: './user-form.component.css'
+  styleUrl: './user-form.component.css',
 })
 export class UserFormComponent {
-    
   @Output() formEmitter = new EventEmitter();
-  @Input() previousData : any = {};  
+  @Input() previousData: any = {};
+
+  formUser: FormGroup;
+
+  constructor(private fb: FormBuilder) {
+    this.formUser = this.fb.group({
+      name: ['', [Validators.min(4), Validators.required]],
+      phoneNumber: ['', [Validators.min(8), Validators.required]],
+      email: ['', [Validators.min(8), Validators.email, Validators.required]],
+      password: ['', [Validators.min(8), Validators.required]],
+    });
+  }
+
+  private parseToJson(){
+    const preHashedPassword = getFormValue('password', this.formUser);
+    const json : User = {
+      id: '',
+      name: getFormValue('name', this.formUser),
+      hashedPassword: aReallyCoolAndActualHash(preHashedPassword),
+      phoneNumber: getFormValue('phoneNumber', this.formUser),
+      email: getFormValue('email', this.formUser),
+      petsIds: []
+    }
+
+    return json;
+  }
+
+  ngOnChanges() {
+    let data: User = this.previousData;
+    setFormValue('name', data.name, this.formUser);
+    setFormValue('email', data.email, this.formUser);
+    setFormValue('phoneNumber', data.phoneNumber, this.formUser);
+  }
+
   
-  formUser : FormGroup;
+  cancel() {
+    Object.values(this.formUser.controls).forEach((control) => {
+      control.setValue('');
+      control.markAsUntouched();
+    });
+    this.formEmitter.emit();
+    return;
+  }
 
-    constructor( private fb : FormBuilder){
-      this.formUser = this.fb.group({
-        email: ['', [Validators.min(8), Validators.email, Validators.required]],
-        password: ['', [Validators.min(8), Validators.required]]
-      })
+  submit() {
+    if (this.formUser.invalid) {
+      Object.values(this.formUser.controls).forEach((control) => {
+        control.markAllAsTouched();
+      });
+    } else {
+      this.formEmitter.emit(this.parseToJson());
+      
     }
-
-    ngOnChanges(){
-      let data : User = this.previousData;
-      setFormValue('email', data.email, this.formUser);
-    }
-
-
+    return;
+  }
 }

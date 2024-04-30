@@ -36,7 +36,6 @@ export class PetDetailsComponent {
   }
 
   async updatePet(event: any) {
-    console.log(event);
     if (event) {
       this.isLoading.set(true);
       let pet: Pet = event;
@@ -52,7 +51,7 @@ export class PetDetailsComponent {
         pet.description,
         pet.location,
       );
-      this.loadData().then((data) => {
+      this.loadData().then(() => {
         this.router.navigate(['my-pets']);
         this.isLoading.set(false);
       });

@@ -1,1 +1,70 @@
-<p>user-form works!</p>
+<form [formGroup]="formUser" (ngSubmit)="submit()" class="flex flex-col w-full h-full">
+  <label for="name">Nombre: </label>
+  <input
+    [class.invalid]="
+      formUser.get('name')?.invalid && formUser.get('name')?.touched
+    "
+    [class.valid]="formUser.get('name')?.valid && formUser.get('name')?.touched"
+    id="name"
+    type="text"
+    formControlName="name"
+  />
+
+  <label for="email">Email: </label>
+  <input
+    [class.invalid]="
+      formUser.get('email')?.invalid && formUser.get('email')?.touched
+    "
+    [class.valid]="
+      formUser.get('email')?.valid && formUser.get('email')?.touched
+    "
+    id="email"
+    type="text"
+    formControlName="email"
+  />
+
+  <label for="password">Contraseña: </label>
+  <input
+    [class.invalid]="
+      formUser.get('password')?.invalid && formUser.get('password')?.touched
+    "
+    [class.valid]="
+      formUser.get('password')?.valid && formUser.get('password')?.touched
+    "
+    id="password"
+    type="password"
+    formControlName="password"
+  />
+
+  <label for="phoneNumber">Teléfono: </label>
+  <input
+    [class.invalid]="
+      formUser.get('phoneNumber')?.invalid &&
+      formUser.get('phoneNumber')?.touched
+    "
+    [class.valid]="
+      formUser.get('phoneNumber')?.valid && formUser.get('phoneNumber')?.touched
+    "
+    id="phoneNumber"
+    pattern="^\+\d{6,}$"
+    type="text"
+    formControlName="phoneNumber"
+  />
+
+  <div class="flex flex-row justify-center self-center">
+    <button
+      class="rounded-md p-4 m-4 w-48 h-16 bg-red-400 text-neutral-50 text-2xl font-semibold text-center hover:bg-red-500"
+      type="button"
+      (click)="cancel()"
+    >
+      Cancelar
+    </button>
+
+    <button
+      class="rounded-md p-4 m-4 w-48 h-16 bg-cyan-400 text-neutral-50 text-2xl font-semibold text-center hover:bg-cyan-500"
+      type="submit"
+    >
+      Continuar
+    </button>
+  </div>
+</form>
