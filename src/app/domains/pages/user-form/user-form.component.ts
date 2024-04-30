@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, input, Output, signal } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -18,6 +18,7 @@ import { aReallyCoolAndActualHash, getFormValue, setFormValue } from '../../util
 export class UserFormComponent {
   @Output() formEmitter = new EventEmitter();
   @Input() previousData: any = {};
+  @Input() buttonText  = signal('');
 
   formUser: FormGroup;
 
@@ -68,7 +69,6 @@ export class UserFormComponent {
       });
     } else {
       this.formEmitter.emit(this.parseToJson());
-      
     }
     return;
   }

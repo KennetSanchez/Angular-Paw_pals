@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { UserFormComponent } from "../../shared/user-form/user-form.component";
+import { UserFormComponent } from "../user-form/user-form.component";
 
 @Component({
     selector: 'app-profile',

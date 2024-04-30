@@ -1,16 +1,17 @@
 import { Component, inject, signal } from '@angular/core';
-import { UserFormComponent } from '../../shared/user-form/user-form.component';
+import { UserFormComponent } from '../user-form/user-form.component';
 import { User } from '../../const/User';
 import { Router } from '@angular/router';
 import { UserService } from '../../services/user.service';
-import { aReallyCoolAndActualHash } from '../../utils/tools';
+import { LoginFormComponent } from "../login-form/login-form.component";
+import { Credentials } from '../../const/Credentials';
 
 @Component({
-  selector: 'app-login',
-  standalone: true,
-  templateUrl: './login.component.html',
-  styleUrl: './login.component.css',
-  imports: [UserFormComponent],
+    selector: 'app-login',
+    standalone: true,
+    templateUrl: './login.component.html',
+    styleUrl: './login.component.css',
+    imports: [UserFormComponent, LoginFormComponent]
 })
 export class LoginComponent {
   user = signal({} as User);
@@ -24,11 +25,11 @@ export class LoginComponent {
   async login(event: any) {
     if (event) {
       this.isLoading.set(true);
-      let user: User = event;
+      let credentials: Credentials = event;
 
       const logged = await this.userService.login(
-        user.email,
-        user.hashedPassword
+        credentials.email,
+        credentials.password,
       );
       
       this.isLoading.set(false);
